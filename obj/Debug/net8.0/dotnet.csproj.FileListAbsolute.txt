@@ -1,0 +1,17 @@
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\dotnet.exe
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\dotnet.deps.json
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\dotnet.runtimeconfig.json
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\dotnet.dll
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\dotnet.pdb
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.AssemblyInfoInputs.cache
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.AssemblyInfo.cs
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.dll
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\refint\dotnet.dll
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.pdb
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.genruntimeconfig.cache
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\ref\dotnet.dll
+C:\Users\admin\Desktop\dotnet\bin\Debug\net8.0\Figgle.dll
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\dotnet\obj\Debug\net8.0\dotnet.csproj.CopyComplete
