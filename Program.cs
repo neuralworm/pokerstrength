@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Figgle;
 using Data;
+using System.Text.RegularExpressions;
 // LIFECYCLE
 Console.CancelKeyPress += delegate
 {
@@ -82,7 +83,12 @@ float getChenStrength(string c1, string c2, bool suited)
 }
 
 int getSklanskyRank(string c1, string c2, bool suited){
-    string keyString = $"{c1}{c2}{(c1 == c2 ? "" : (suited ? "s" : ""))}";
+    string bigger, smaller;
+    int indexOne = Array.IndexOf(cards, c1);
+    int indexTwo = Array.IndexOf(cards, c2);
+    bigger = indexOne > indexTwo ? c1 : c2;
+    smaller = bigger == c1 ? c2 : c1;
+    string keyString = $"{bigger}{smaller}{(bigger == smaller ? "" : (suited ? "s" : ""))}";
     foreach(KeyValuePair<int, string[]> entry in sklanskyMap){
         if(entry.Value.Contains(keyString)){
             return entry.Key;
@@ -105,11 +111,11 @@ while (true)
 
     try
     {
-        string[] arguments = input.Split(" ");
-        if (arguments.Length == 1) arguments = input.Split("");
+        string noWhitespace = Regex.Replace(input, @"\s+", "");
+        char[] arguments = noWhitespace.ToCharArray();
 
-        string c1 = arguments[0].ToUpper();
-        string c2 = arguments[1].ToUpper();
+        string c1 = arguments[0].ToString().ToUpper();
+        string c2 = arguments[1].ToString().ToUpper();
         if (!isValidCard(c1) || !isValidCard(c2))
         {
             errorMessage();
@@ -117,8 +123,8 @@ while (true)
         }
         bool suited;
         if(arguments.Length < 3) suited = false;
-        else if (arguments[2].ToUpper() == "O") suited = false;
-        else if (arguments[2].ToUpper() == "S") suited = true;
+        else if (arguments[2].ToString().ToUpper() == "O") suited = false;
+        else if (arguments[2].ToString().ToUpper() == "S") suited = true;
         else
         {
             errorMessage();
