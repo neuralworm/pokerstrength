@@ -125,9 +125,11 @@ while (true)
             continue;
         }
 
-
+        // OUTPUT
+        Console.WriteLine($"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\n");
         Console.WriteLine(getChenStrengthOutput(c1, c2, suited));
-        Console.WriteLine("Sklansky Rank: " + getSklanskyRank(c1, c2, suited));
+        Console.WriteLine("Sklansky Rank:");
+        drawHighlightedText(getSklanskyRank(c1, c2, suited).ToString());
     }
     catch (Exception e)
     {
@@ -161,11 +163,17 @@ string getHighestCard(string c1, string c2)
 string getChenStrengthOutput(string c1, string c2, bool suited)
 {
     float chenStrength = getChenStrength(c1, c2, suited);
-    return $"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\nChen Formula Strength: {chenStrength} / 22";
+    return $"Chen Formula Strength:\n{chenStrength} / 22";
 }
 void helpMenu()
 {
     Console.WriteLine(FiggleFonts.Standard.Render("HELP MENU"));
     Data.ChenFormula.output();
+}
+void drawHighlightedText(string msg){
+    Console.BackgroundColor = ConsoleColor.Blue;
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine(msg);
+    Console.ResetColor();
 }
 
