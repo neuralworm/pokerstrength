@@ -28,7 +28,7 @@ Dictionary<int, string[]> sklanskyMap = new Dictionary<int, string[]>
         "AT", "KT", "QT", "J8s", "86s", "75s", "65s", "55", "54s"
     ],
     [7] = [
-        "K9s", "k8s", "k7s", "k6s", "k5s", "k4s", "k3s", "K2s", "J9", "T9", "98", "64s", "53s", "44", "43s", "33", "22"
+        "K9s", "K8s", "K7s", "K6s", "K5s", "K4s", "K3s", "K2s", "J9", "T9", "98", "64s", "53s", "44", "43s", "33", "22"
     ],
     [8] = [
         "A9", "K9", "Q9", "J8", "J7s", "T8", "96s", "87", "85s", "76", "74s", "65", "54", "42s", "32s"
@@ -127,9 +127,11 @@ while (true)
 
         // OUTPUT
         Console.WriteLine($"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\n");
+        Console.WriteLine(String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Strength System", "Rating", "Desc", "Turns"));
         Console.WriteLine(getChenStrengthOutput(c1, c2, suited));
-        Console.WriteLine("Sklansky Rank:");
-        drawHighlightedText(getSklanskyRank(c1, c2, suited).ToString());
+        int sklanskyRank = getSklanskyRank(c1, c2, suited);
+        Console.WriteLine(String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Sklansky Rank  (1/best - 9/trash)", sklanskyRank, "Desc", SklanskyGroups.rankStrengthMessages[sklanskyRank]));
+    Console.WriteLine("\n");
     }
     catch (Exception e)
     {
@@ -163,7 +165,7 @@ string getHighestCard(string c1, string c2)
 string getChenStrengthOutput(string c1, string c2, bool suited)
 {
     float chenStrength = getChenStrength(c1, c2, suited);
-    return $"Chen Formula Strength:\n{chenStrength} / 22";
+    return String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Chen Formula (Higher Better)", chenStrength, "N/A", "N/A");
 }
 void helpMenu()
 {
