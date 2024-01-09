@@ -11,4 +11,13 @@ namespace Data{
             Console.WriteLine(description);
         }
     }
+     class SklanskyGroups: HelpSection {
+        static string title = "Sklansky Groups";
+        static string description = "Hands ranked into groups determining their playability.";
+        static int[] ranks = [1, 2, 3, 4, 5, 6, 7, 8];
+        public static void output(){
+            Console.WriteLine(title);
+            Console.WriteLine(description);
+        }
+     }
 }

@@ -6,7 +6,35 @@ Console.CancelKeyPress += delegate
 {
     Environment.Exit(-1);
 };
-// Chen formula
+// SKLANSKY GROUPS
+Dictionary<int, string[]> sklanskyMap = new Dictionary<int, string[]>
+{
+    [1] = [
+        "AA", "AKs", "KK", "QQ", "JJ"
+    ],
+    [2] = [
+        "AK", "AQs", "AJs", "KQs", "TT"
+    ],
+    [3] = [
+        "AQ", "ATs", "KJs", "QJs", "JTs", "99"
+    ],
+    [4] = [
+        "AJ", "KQ", "KTs", "QTs", "J9s", "T9s", "98s", "88"
+    ],
+    [5] = [
+        "A9s", "A8s", "A7s", "A6s", "A5s", "A4s", "A3s", "A2s", "KJ", "QJ", "JT", "Q9s", "T8s", "97s", "87s", "77", "76s", "66"
+    ],
+    [6] = [
+        "AT", "KT", "QT", "J8s", "86s", "75s", "65s", "55", "54s"
+    ],
+    [7] = [
+        "K9s", "k8s", "k7s", "k6s", "k5s", "k4s", "k3s", "K2s", "J9", "T9", "98", "64s", "53s", "44", "43s", "33", "22"
+    ],
+    [8] = [
+        "A9", "K9", "Q9", "J8", "J7s", "T8", "96s", "87", "85s", "76", "74s", "65", "54", "42s", "32s"
+    ]
+};
+// CHEM FORMULA
 Dictionary<string, float> chenDictionary = new Dictionary<string, float>
 {
     ["2"] = 1,
@@ -47,12 +75,21 @@ float getChenStrength(string c1, string c2, bool suited)
         total -= gap < 3 ? gap : (gap < 4 ? 4 : 5);
         // Add 1 point if there is a 0 or 1 card gap and both cards are lower than a Q. (e.g. JT, 75, 32 etc, this bonus point does not apply to pocket pairs)
 
-        if(total < 0) total = 0;
+        if (total < 0) total = 0;
         if (suited) total += 2;
     }
     return total;
 }
 
+int getSklanskyRank(string c1, string c2, bool suited){
+    string keyString = $"{c1}{c2}{(c1 == c2 ? "" : (suited ? "s" : ""))}";
+    foreach(KeyValuePair<int, string[]> entry in sklanskyMap){
+        if(entry.Value.Contains(keyString)){
+            return entry.Key;
+        }
+    }
+    return 9;
+}
 
 // HEADER
 Console.WriteLine(FiggleFonts.Standard.Render("POKER STRENGTH"));
@@ -79,7 +116,8 @@ while (true)
             continue;
         }
         bool suited;
-        if (arguments[2].ToUpper() == "O") suited = false;
+        if(arguments.Length < 3) suited = false;
+        else if (arguments[2].ToUpper() == "O") suited = false;
         else if (arguments[2].ToUpper() == "S") suited = true;
         else
         {
@@ -88,7 +126,8 @@ while (true)
         }
 
 
-        Console.WriteLine(getStrengthOutput(c1, c2, suited));
+        Console.WriteLine(getChenStrengthOutput(c1, c2, suited));
+        Console.WriteLine("Sklansky Rank: " + getSklanskyRank(c1, c2, suited));
     }
     catch (Exception e)
     {
@@ -119,12 +158,13 @@ string getHighestCard(string c1, string c2)
 {
     return chenDictionary[c1] > chenDictionary[c2] ? c1 : c2;
 }
-string getStrengthOutput(string c1, string c2, bool suited)
+string getChenStrengthOutput(string c1, string c2, bool suited)
 {
     float chenStrength = getChenStrength(c1, c2, suited);
-    return $"{c1} {c2} {(c1 == c2 ? "" : ((suited ? "Suited" : "Offsuit")))}\nChen Formula Strength: {chenStrength} / 22";
+    return $"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\nChen Formula Strength: {chenStrength} / 22";
 }
-void helpMenu(){
+void helpMenu()
+{
     Console.WriteLine(FiggleFonts.Standard.Render("HELP MENU"));
     Data.ChenFormula.output();
 }
