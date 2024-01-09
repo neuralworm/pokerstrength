@@ -127,10 +127,11 @@ while (true)
 
         // OUTPUT
         Console.WriteLine($"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\n");
-        Console.WriteLine(String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Strength System", "Rating", "Desc", "Turns"));
-        Console.WriteLine(getChenStrengthOutput(c1, c2, suited));
+        drawTableRow("Strength System", "Rating", "Desc", "Turns");
+        float chenStrength = getChenStrength(c1, c2, suited);
+        drawTableRow("Chen Formula (Higher Better)", chenStrength.ToString(), "N/A", "N/A");
         int sklanskyRank = getSklanskyRank(c1, c2, suited);
-        Console.WriteLine(String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Sklansky Rank  (1/best - 9/trash)", sklanskyRank, "Desc", SklanskyGroups.rankStrengthMessages[sklanskyRank]));
+        drawTableRow("Sklansky Rank  (1/best - 9/trash)", sklanskyRank.ToString(), "Desc", SklanskyGroups.rankStrengthMessages[sklanskyRank]);
     Console.WriteLine("\n");
     }
     catch (Exception e)
@@ -162,15 +163,13 @@ string getHighestCard(string c1, string c2)
 {
     return chenDictionary[c1] > chenDictionary[c2] ? c1 : c2;
 }
-string getChenStrengthOutput(string c1, string c2, bool suited)
-{
-    float chenStrength = getChenStrength(c1, c2, suited);
-    return String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", "Chen Formula (Higher Better)", chenStrength, "N/A", "N/A");
-}
 void helpMenu()
 {
     Console.WriteLine(FiggleFonts.Standard.Render("HELP MENU"));
     Data.ChenFormula.output();
+}
+void drawTableRow(string label, string rank, string desc, string turn){
+    Console.WriteLine(String.Format("|{0,36}|{1,12}|{2,12}|{3,30}|", label, rank, desc, turn));
 }
 void drawHighlightedText(string msg){
     Console.BackgroundColor = ConsoleColor.Blue;
