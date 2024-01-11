@@ -57,29 +57,33 @@ string[] cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A
 Dictionary<string, string[]> cardMap = new Dictionary<string, string[]> { ["2"] = ["2", "two"] };
 
 
-float getChenStrength(string c1, string c2, bool suited)
+double getChenStrength(string c1, string c2, bool suited)
 {
     float total = 0;
     total += chenDictionary[getHighestCard(c1, c2)];
     // IF PAIR
     if (c1 == c2)
     {
-        if (c1 == "2" || c1 == "3" || c1 == "4") total += 5;
-        else if (c1 == "5") total += 6;
-        else total *= 2;
+        total *= 2;
+        if(total < 5) total = 5;
     }
     // ELSE GAPPERS/CLOSENESS
     else
     {
+        int c1index = Array.IndexOf(cards, c1);
+        int c2index = Array.IndexOf(cards, c2);
         // Subtract points if their is a gap between the two cards.
-        int gap = Math.Abs(Array.FindIndex<string>(cards, x => x.Contains(c1)) - Array.FindIndex<string>(cards, x => x.Contains(c2)));
+        int gap = Math.Abs(c1index - c2index) - 1;
         total -= gap < 3 ? gap : (gap < 4 ? 4 : 5);
         // Add 1 point if there is a 0 or 1 card gap and both cards are lower than a Q. (e.g. JT, 75, 32 etc, this bonus point does not apply to pocket pairs)
-
-        if (total < 0) total = 0;
+        int queenIndex = Array.IndexOf(cards, "Q");
+        if(c1index < queenIndex && c2index < queenIndex){
+            if(Math.Abs(c1index - c2index) - 1  <= 1) total += 1;
+        }
         if (suited) total += 2;
     }
-    return total;
+
+    return Math.Ceiling(total);
 }
 
 int getSklanskyRank(string c1, string c2, bool suited){
@@ -134,11 +138,13 @@ while (true)
         // OUTPUT
         Console.WriteLine($"{c1} {c2} {(c1 == c2 ? "" : (suited ? "Suited" : "Offsuit"))}\n");
         drawTableRow("Strength System", "Rating", "Desc", "Turns");
-        float chenStrength = getChenStrength(c1, c2, suited);
+        double chenStrength = getChenStrength(c1, c2, suited);
         drawTableRow("Chen Formula (Higher Better)", chenStrength.ToString(), "N/A", "N/A");
         int sklanskyRank = getSklanskyRank(c1, c2, suited);
         drawTableRow("Sklansky Rank  (1/best - 9/trash)", sklanskyRank.ToString(), "Desc", SklanskyGroups.rankStrengthMessages[sklanskyRank]);
-    Console.WriteLine("\n");
+        Console.WriteLine("OVERALL: " );
+        Console.WriteLine("\n");
+
     }
     catch (Exception e)
     {
